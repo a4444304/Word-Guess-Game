@@ -43,6 +43,66 @@ console.log(numBlanks);
 console.log(blanksAndSuccesses);
 }
 
+function checkLetters(letter) { 
+     //Check if letter exists in code at all
+     var isLetterInWord = false;
+
+    for (var i=0; i<numBlanks; i++) {
+         if(selectedWord)[i] == letter) {
+             isLetterInWord = true;
+         }
+     }
+}
+//Check where in the word the letter exists, then populate out blankAnd Successes array.
+if(isLetterInWord) {
+    for (var i=0; i<numBlanks; i++) {
+        if(selectedWord)[i] == letter) {
+        blanksAndSuccesses[i] == letter;
+        }
+    }
+}
+//Letter wasn't found
+else {
+    wrongLetters.push(letter);
+    guessesLeft--
+}
+//Testing and Debugging
+console.log(blanksAndSuccesses);
+
+function roundComplete(){
+    console.log("Win Count:" + "| Loss Count:" + lossCount + "| Guesses Left" + numGuesses);
+
+    //Update the HTML to reflect the most recent count stats
+    document.getElementById("numGuesses").innerHTML = guessesLeft;
+    document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join(" ");
+    document.getElementById("wrongGuesses").innerHTML = wrongLetters.join(" ");
+    
+
+    //Check if user won
+    if (lettersinWord.toString() == blanksAndSuccesses.toString()) {
+        winCount++;  
+        alert("You Won!");
+
+        //Update the win counter in the HTML
+        document.getElementById("winCounter").innerHTML = winCount;
+
+        startGame();
+    }
+
+    //Check if user lost
+    else if (numGuesses == 0) {
+        lossCount++;
+        alert("You Lost!");
+
+        //Update the HTML
+        document.getElementById("lossCounter").innerHTML = lossCount;
+
+        startGame();
+    }
+  
+    
+}
+
 //Main Process
 //-------------------------------------------
 
@@ -52,5 +112,11 @@ startGame();
 //Register keyclicks
 
 document.onkeyup = function(event) {
-    letter
+   var letterGuessed = String.fromCharCode(event.keyCode)
+   . toLocaleLowerCase();
+   checkLetters(letterGuessed);
+   roundComplete();
+   
+   //Testing/Debugging
+   console.log(letterGuessed);
 }
