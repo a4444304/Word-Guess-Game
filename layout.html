@@ -2,58 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Word Guess Game</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-     crossorigin="anonymous">
+    <title>Letter Guess Game</title>  
 </head> 
 <body>  
 
-    <div class="container">
-
-        <div class="jumbotron">
-                <h1>Word Guess Game</h1>
-                <p>Guess the State Capital
-                of the United States</p>
-        </div>
-        
-        <div class="panel panel-default">
-              <div class="panel-heading">
-                    <h3 class="panel-title">Word to Guess</h3>
-              </div>
-              <div class="panel-body">
-                    <h2> id="wordToGuess"_ _ _ _ _ _ _</h2>
-              </div>
-        </div>
-        
-        <div class="panel panel-default">
-            <div class="panel-body">
-               Wrong Guesses: <span id="wrongGuesses"></span>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-               Guesses Left: <span id="numGuesses">9</span>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-                Win Counter: <span id="winCounter">0</span>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-                Loss Counter: <span id="lossCounter">0</span>
-            </div>
-        </div>
-        
+    <div id="game">
+        <h1>The Letter Guess Game</h1>
+        <br>
+        <p>Guess the letter I am thinking of</p>
+        <p id="win">Wins: </p>
+        <p id="lose">Losses: </p>
+        <p id="numGuess"></p>
+        <p id="guessSo"></p>
     </div>
+
+    <script type="text/javascript">
+    // Creates an array the lists all of the letters in the alphabet
+    var alphabetDS = ["a","b","c","d","e","f","g","h","i","j","K","l","m","n",
+    "o","p","q","r","s","t","u","v","w","x","y","z"];
+    // win counter
+    var i = 0; 
+    // loss counter
+    var j = 0;
+    // number of guesses
+    var numberOfGuesses = 9;
+    // users guesses concatenated
+    var concatenatedGuesses = "";
+    // letters the computer will guess
+    var computerGuesses = "";
+
+    function intialize()
+    {
+        computerGuesses = alphabetDS[Math.floor(Math.random() * alphabetDS.length)];
+        // string to hold all of a user's guesses in one variable
+        concatenatedGuesses = "";
+        numberOfGuesses = 9;
+        var elem = document.getElementById("numGuess");
+        elem.innerHTML = "Number of guesses left: " + numberOfGuesses;
+        var elemTwo = document.getElementById("guessSo");
+        elemTwo.innerHTML = "Guesses so far...";
+    }
+
+    function win()
+    {
+        i++;
+        var elem = document.getElementById("win");
+        // this will update the game
+        elem.innerHTML = "Wins: " + i;
+        // this will restart the game
+        intialize();
+    }
+
+    function lose()
+    {
+        j++;
+        var elem = document.getElementById("lose");
+        // this will update the game
+        elem.innerHTML = "Losses: " + j;
+        // this will restart the game
+        intialize();
+    }
+    // this will start the event listener
+    document.onkeyup = function(event)
+    {
+    // determines, and stores, which key was pressed
+    var userGuess = event.key;
+    // this will loop through the alphabet data structure
+    // to validate user input
+    for(var l = 0; l < alphabetDS.length; l++) {
+
+        if(userGuess == alphabetDS[l])
+        {
+        // when the user makes a valid choice the break will exit the loop
+        break;
+        }
+        // the else if will happen if the user made an incorrect choice
+        else if((l + 1) == alphabetDS.length) {
+            alert("Please choose only a lower case letter for this game.");
+        }
+    }
     
-    <script src="logic.js"></script>
-
-
+    // this will store the user guesses into one string
+    concatenatedGuesses = concatenatedGuesses + userGuess + " ";
+    // user has won
+    if(userGuess === computerGuesses) {
+        // this will call the win function
+        win();
+    }
+    // user has made an incorrect guess
+    else if (numberOfGuesses != 1){
+        numberOfGuesses = numberOfGuesses - 1;
+        var elem = document.getElementById("numGuess");
+        // this will update the number of guesses left
+        elem.innerHTML = "Number of guesses left: " + numberOfGuesses;
+        var elemTwo = document.getElementById("guessSo");
+        // this will update which letters have been guessed so far
+        elemTwo.innerHTML = "Guesses so far... " + concatenatedGuesses;
+            alert("Try Again!");
+    }
+    else
+    {
+        // this will call the lose function
+        lose();
+    }
+    // this will end function onkeyup
+    }
+    // this will call the intialize function to set the page up for the game
+    intialize();
+    
+</script>
+                
+    <!-- <script src="assets/javascript/game.js"></script> -->
 </body>
 </html>
